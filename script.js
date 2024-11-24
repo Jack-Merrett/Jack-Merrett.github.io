@@ -1,16 +1,26 @@
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('JavaScript is working!'); // Debug message to ensure script runs
-
   const generateBtn = document.getElementById('generateBtn');
   const passwordList = document.getElementById('passwordList');
   const numPasswordsInput = document.getElementById('numPasswords');
+  let words = []; // Array to store words from the file
 
-  // Ensure elements are found
-  if (!generateBtn || !passwordList || !numPasswordsInput) {
-      console.error('One or more elements are missing.');
-      return;
-  }
+  // Fetch the words from the text file
+  fetch('words.txt')
+      .then(response => {
+          if (!response.ok) {
+              throw new Error(`Failed to load words.txt: ${response.status}`);
+          }
+          return response.text();
+      })
+      .then(text => {
+          words = text.split('\n').map(word => word.trim()).filter(word => word !== '');
+          console.log('Words loaded:', words); // Debug log to confirm words are loaded
+      })
+      .catch(error => {
+          console.error('Error loading words:', error);
+      });
 
+  // Generate passwords when button is clicked
   generateBtn.addEventListener('click', () => {
       const numPasswords = parseInt(numPasswordsInput.value);
       if (isNaN(numPasswords) || numPasswords < 1) {
@@ -18,36 +28,22 @@ document.addEventListener('DOMContentLoaded', () => {
           return;
       }
 
-      const words = ['Apple', 'Azure', 'Birch', 'Blush', 'Brass', 'Burgundy', 'Cerulean', 'Charcoal', 'Cherry', 'Chestnut',  
-     'Cobalt', 'Coral', 'Crimson', 'Cyan', 'Dandelion', 'Denim', 'Ebony', 'Emerald', 'Fawn', 'Flame',  
-     'Flax', 'Forest', 'Fuchsia', 'Garnet', 'Gold', 'Graphite', 'Hazel', 'Indigo', 'Ivory', 'Jade',  
-     'Jasmine', 'Lavender', 'Lilac', 'Lime', 'Mahogany', 'Malachite', 'Mauve', 'Mint', 'Mustard', 'Ochre',  
-     'Olive', 'Onyx', 'Orchid', 'Peach', 'Pearl', 'Periwinkle', 'Plum', 'Quartz', 'Ruby', 'Russet',  
-      'Saffron', 'Sage', 'Sand', 'Scarlet', 'Sepia', 'Silver', 'Slate', 'Snow', 'Spruce', 'Steel',  
-      'Tan', 'Taupe', 'Tawny', 'Terra', 'Thistle', 'Topaz', 'Turquoise', 'Umber', 'Vanilla', 'Verdant',  
-      'Vermilion', 'Violet', 'Walnut', 'Wheat', 'White', 'Wisteria', 'Yellow', 'Zinc', 'Amaranth', 'Amethyst',  
-      'Apricot', 'Aquamarine', 'Arctic', 'Ash', 'Beige', 'Beryl', 'Blizzard', 'Bronze', 'Carnation', 'Chiffon',  
-      'Copper', 'Cotton', 'Driftwood', 'Ecru', 'Feldspar', 'Frost', 'Granite', 'Horizon', 'Lavish', 'Meadow', 
-      'Red', 'Blue', 'Green', 'Yellow', 'Pink', 'Black', 'White', 'Orange', 'Purple', 'Brown',  
-      'Gray', 'Gold', 'Silver', 'Tan', 'Beige', 'Teal', 'Lime', 'Ivory', 'Coral', 'Cyan',  
-      'Navy', 'Peach', 'Mint', 'Rust', 'Amber', 'Plum', 'Rose', 'Slate', 'Moss', 'Pear',  
-      'Aqua', 'Ash', 'Berry', 'Blush', 'Brick', 'Clay', 'Cloud', 'Cocoa', 'Cream', 'Fern',  
-      'Frost', 'Grape', 'Honey', 'Ice', 'Jet', 'Leaf', 'Lilac', 'Mango', 'Moon', 'Oat',  
-      'Pine', 'Rain', 'Sand', 'Sea', 'Sky', 'Snow', 'Soil', 'Star', 'Stone', 'Sun',  
-      'Thyme', 'Wood', 'Apple', 'Berry', 'Chalk', 'Cherry', 'Denim', 'Dusk', 'Earth', 'Fire',  
-      'Fog', 'Grass', 'Ocean', 'Onyx', 'Petal', 'Quartz', 'River', 'Ruby', 'Shell', 'Smoke',  
-      'Sugar', 'Violet', 'Water', 'Wind', 'Wolf', 'Wheat', 'Sunset', 'Shadow', 'Storm', 'Drift',  
-      'Forest', 'Glass', 'Light', 'Metal', 'Olive', 'Steel', 'Topaz', 'Willow', 'Velvet', 'Breeze'];
+      if (words.length === 0) {
+          alert('Words are not loaded yet. Please try again.');
+          return;
+      }
+
+      passwordList.innerHTML = ''; // Clear previous passwords
 
       for (let i = 0; i < numPasswords; i++) {
-        const word1 = words[Math.floor(Math.random() * words.length)];
-        const word2 = words[Math.floor(Math.random() * words.length)];
-        const number = Math.floor(Math.random() * 90) + 10; // Two-digit number
-        const password = `${word1}${number}${word2}!`;
+          const word1 = words[Math.floor(Math.random() * words.length)];
+          const word2 = words[Math.floor(Math.random() * words.length)];
+          const number = Math.floor(Math.random() * 90) + 10; // Two-digit number
+          const password = `${word1}${number}${word2}!`;
 
-        const li = document.createElement('li');
-        li.textContent = password;
-        passwordList.appendChild(li);
-    }
-});
+          const li = document.createElement('li');
+          li.textContent = password;
+          passwordList.appendChild(li);
+      }
+  });
 });
