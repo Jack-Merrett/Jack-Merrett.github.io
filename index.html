@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div>
-        <label for="numPasswords">How many passwords?</label>
-        <input type="number" id="numPasswords" min="1" max="100">
-        <button id="generateBtn">Generate Passwords</button>
-    </div>
-    <ul id="passwordList"></ul>
+    <header>
+        <h1>HTS Password Generator</h1>
+    </header>
+    <main>
+        <div class="input-container">
+            <label for="numPasswords">How many passwords?</label>
+            <input type="number" id="numPasswords" min="1" max="100" placeholder="Enter a number">
+            <button id="generateBtn">Generate Passwords</button>
+        </div>
+        <ul id="passwordList"></ul>
+    </main>
     <script src="script.js"></script>
 </body>
 </html>
