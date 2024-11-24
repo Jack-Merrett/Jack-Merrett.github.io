@@ -51,7 +51,7 @@ button {
   margin-top: 10px;
   padding: 10px 20px;
   font-size: 1rem;
-  background-color: #ff5722;
+  background-color: #aa3917;
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -60,7 +60,7 @@ button {
 }
 
 button:hover {
-  background-color: #db4214;
+  background-color: rgba(167, 23, 13, 0.651);
 }
 
 /* Password List */
