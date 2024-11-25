@@ -481,3 +481,10 @@ Wool
 Work
 Worm
 Yarn
+Banana
+Man
+Stinky
+Guy
+Smelly
+Get
+Super
